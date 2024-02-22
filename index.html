@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Effect</title>
     <style>
-        /* Thêm CSS để tùy chỉnh hiệu ứng gõ chữ và hình nền */
+        /* Thêm CSS để tùy chỉnh hiệu ứng gõ chữ và căn giữa */
         body, html {
             height: 100%;
             display: flex;
@@ -22,6 +20,7 @@
             border-right: .15em solid orange;
             font-family: monospace; /* Sử dụng font monospace để các ký tự có cùng chiều rộng */
             position: relative; /* Thiết lập vị trí tương đối để dấu gạch dưới có thể di chuyển */
+            font-size: 32px; /* Thiết lập font size */
         }
 
         .blink {
@@ -44,7 +43,7 @@
         };
 
         function startTyping() {
-            var text = "P l a y G r o u n d . . . D o n ' t H a c k !"; // Chuỗi cần in ra
+            var text = "kien dang cap vcl"; // Chuỗi cần in ra
 
             var outputDiv = document.getElementById('output');
             if (!outputDiv) {
@@ -58,24 +57,13 @@
         function typingEffect(text, element) {
             var index = 0;
             var interval = setInterval(function() {
-                if (index <= text.length) {
-                    element.textContent = text.slice(0, index) + '_';
-                    index++;
+                if (index < text.length) {
+                    element.textContent += text[index++];
                 } else {
                     clearInterval(interval);
+                    element.classList.remove('blink'); // Loại bỏ hiệu ứng nhấp nháy
                 }
             }, 150); // Thời gian giữa mỗi ký tự (đã thay đổi từ 70 thành 150)
-
-            // Thêm hiệu ứng nhấp nháy cho dấu gạch dưới
-            setInterval(function() {
-                var lastChar = element.textContent.slice(-1);
-                if (lastChar === '_') {
-                    element.textContent = element.textContent.slice(0, -1);
-                } else {
-                    element.textContent += '_';
-                }
-                element.classList.toggle('blink');
-            }, 500); // Thời gian nhấp nháy (ms)
         }
     </script>
 </body>
