@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Typing Effect</title>
+    <style>
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .background {
+            background-image: url("/image.jpg");
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #output-container {
+            text-align: center;
+            position: relative;
+            z-index: 1; /* Đặt lớp z-index để văn bản và dấu nháy hiển thị trên background */
+        }
+
+        #output {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 32px;
+            font-weight: bold;
+            vertical-align: middle;
+            color: white;
+        }
+
+        .blink {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 32px;
+            font-weight: bold;
+            vertical-align: middle;
+            color: white;
+        }
+
+        .blink-animation {
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        .hidden-char {
+            visibility: hidden;
+        }
+
+        /* Định dạng cho background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Đặt lớp z-index để nó nằm dưới văn bản và dấu nháy */
+            opacity: 1.0; /* Đặt độ trong suốt của background */
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div> <!-- Thêm phần tử background -->
+    <div id="output-container">
+        <div id="output"></div>
+        <span class="blink hidden-char">_</span>
+    </div>
+
+    <script>
+        window.onload = function() {
+            startTyping();
+        };
+
+        function startTyping() {
+            var text = "P l a y   G r o u n d . . . D o n ' t   H a c k !"; // Chuỗi cần in ra
+
+            var outputDiv = document.getElementById('output');
+            if (!outputDiv) {
+                return;
+            }
+
+            // Hiển thị hiệu ứng gõ chữ
+            typingEffect(text, outputDiv);
+        }
+
+        function typingEffect(text, element) {
+            var index = 0;
+            var isTypingFinished = false;
+
+            var interval = setInterval(function() {
+                if (index < text.length) {
+                    element.textContent = text.slice(0, index + 1);
+                    index++;
+                } else {
+                    clearInterval(interval);
+                    isTypingFinished = true;
+                }
+            }, 50);
+
+            var blinkSpan = document.querySelector('.blink');
+            var blinkInterval = setInterval(function() {
+                blinkSpan.style.visibility = 'visible';
+            }, 50);
+
+            setTimeout(function() {
+                clearInterval(blinkInterval);
+                blinkSpan.classList.add('blink-animation');
+            }, text.length * 50);
+        }
+    </script>
+</body>
+</html>
