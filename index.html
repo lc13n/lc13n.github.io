@@ -1,3 +1,82 @@
-<html>
-<span style="font-size: 32px"><center><strong>P l a y G r o u n d . . . D o n ' t H a c k !</strong></center></span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Effect</title>
+    <style>
+        /* Thêm CSS để tùy chỉnh hiệu ứng gõ chữ và hình nền */
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("/image.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        #output {
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid orange;
+            font-family: monospace; /* Sử dụng font monospace để các ký tự có cùng chiều rộng */
+            position: relative; /* Thiết lập vị trí tương đối để dấu gạch dưới có thể di chuyển */
+        }
+
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        window.onload = function() {
+            startTyping();
+        };
+
+        function startTyping() {
+            var text = "P l a y G r o u n d . . . D o n ' t H a c k !"; // Chuỗi cần in ra
+
+            var outputDiv = document.getElementById('output');
+            if (!outputDiv) {
+                return;
+            }
+
+            // Hiển thị hiệu ứng gõ chữ
+            typingEffect(text, outputDiv);
+        }
+
+        function typingEffect(text, element) {
+            var index = 0;
+            var interval = setInterval(function() {
+                if (index <= text.length) {
+                    element.textContent = text.slice(0, index) + '_';
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 150); // Thời gian giữa mỗi ký tự (đã thay đổi từ 70 thành 150)
+
+            // Thêm hiệu ứng nhấp nháy cho dấu gạch dưới
+            setInterval(function() {
+                var lastChar = element.textContent.slice(-1);
+                if (lastChar === '_') {
+                    element.textContent = element.textContent.slice(0, -1);
+                } else {
+                    element.textContent += '_';
+                }
+                element.classList.toggle('blink');
+            }, 500); // Thời gian nhấp nháy (ms)
+        }
+    </script>
+</body>
 </html>
